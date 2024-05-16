@@ -15,6 +15,8 @@ def md5_gen():
         print(output)
 
 
+
+
 # g = md5_gen()
 # g.send(None)
 # p = g.send('hello')

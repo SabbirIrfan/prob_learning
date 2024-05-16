@@ -1,0 +1,16 @@
+
+@why hibernate instead of jdbc?
+
+#eliminate boiler plate code 
+#support of HQL which is objet oriented
+# exception handling done by hibernateException
+
+** # provides transaction management implicitly
+**# caching for better performance
+
+
+$$ important Interface used in Hibernate.
+@SessionFactory >> init the factory once and it can be resued by caching 
+
+@Session >> factory for transaction. its used to make ?physical? connection to the persistance store .  
+transaction>> this specifies single /atomic units of work. roleback if some error happens. 

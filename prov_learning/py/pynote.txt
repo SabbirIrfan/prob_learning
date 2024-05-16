@@ -1,0 +1,10 @@
+#concurrency  vs parrallelism
+
+concurrency >> run task in overlapping time periods
+parrallelism>> run simultaniously without needing to wait or break the task into multiple part
+
+
+#preemtive  vs cooperative multitasking
+preemtive>> scheduler interrupts task >> no controll over context switching
+cooperative>> task yield to scheduler.
+
