@@ -29,4 +29,25 @@ def gen_forecast(city):
 
 g = gen_forecast(44)
 
-print(next(g))
+# print(next(g))
+
+def got_the_coroutine():
+    x = 0  # Initialize x
+    y = 0  # Initialize y
+    while True:
+        x = yield x
+        print(x ,"x first yeild")        
+        y = yield y
+        print(y ,"y second yeild")
+        y = x * y 
+        print(y,"y = x*y  final multiplication")
+
+gg = got_the_coroutine()
+next(gg)
+print(gg.send(1))
+print(gg.send(2))
+
+print(gg.send(2))
+print(gg.send(5))
+
+
