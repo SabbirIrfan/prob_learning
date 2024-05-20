@@ -1,0 +1,3 @@
+@Transient
+You might use @Transient for fields that are derived from other fields, are calculated dynamically, 
+or are used only temporarily within the application and should not be stored in the database.

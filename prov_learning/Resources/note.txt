@@ -1,0 +1,13 @@
+task:: read keri in action.
+understand the endpoint keria.
+use the swegger endpoint
+
+
+
+AgentSpecResource from spacing.py in keria.
+https://github.com/WebOfTrust/kapi/blob/main/kapi.md
+
+https://github.com/WebOfTrust/signify-ts
+
+
+basing>> coring>> LMDB important..

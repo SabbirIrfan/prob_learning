@@ -1,0 +1,6 @@
+#var::
+
+The var keyword improves code readability, especially when dealing with complex types or when the type is obvious from the right-hand side of the assignment. It reduces redundancy and boilerplate code, making the code more concise and maintainable.
+
+However, it's important to note that var is only allowed for local variables with initializers. It cannot be used for method parameters, fields, return types, or any other kind of variable declaration.
+

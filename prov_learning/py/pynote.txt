@@ -8,3 +8,14 @@ parrallelism>> run simultaniously without needing to wait or break the task into
 preemtive>> scheduler interrupts task >> no controll over context switching
 cooperative>> task yield to scheduler.
 
+
+#Summary of Key Differences between str() of python2.7 vs python3.x
+String Type:
+Python 2.7: str is for byte strings; unicode is for Unicode strings.
+Python 3.x: str is for Unicode strings; bytes is for byte strings.
+Default Encoding:
+Python 2.7: Default encoding is ASCII.
+Python 3.x: Default encoding is UTF-8.
+Function Usage:
+Python 2.7: Use str() for byte strings and unicode() for Unicode strings.
+Python 3.x: Use str() for Unicode strings and bytes() for byte strings.
