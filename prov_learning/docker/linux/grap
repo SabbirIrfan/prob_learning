@@ -1,0 +1,34 @@
+
+grep command 
+
+The grep command in Unix/Linux is used to search text using patterns. It is commonly used to search for specific strings in files. Here are some common examples:
+
+Search for a string in a file:
+grep "search_string" filename
+
+Example: Search for the word "error" in logfile.txt:
+grep "error" logfile.txt
+
+Search recursively in directories:
+grep -r "search_string" /path/to/search
+
+Example: Search for the word "error" in all files under /var/log:
+grep -r "error" /var/log
+
+Search with case insensitivity:
+grep -i "search_string" filename
+
+Example: Search for "error" in logfile.txt, ignoring case:
+grep -i "error" logfile.txt
+
+Show line numbers with matches:
+grep -n "search_string" filename
+
+Example: Search for "error" and show line numbers in logfile.txt:
+grep -n "error" logfile.txt
+
+Search for whole words:
+grep -w "search_string" filename
+
+Example: Search for the whole word "error" in logfile.txt:
+grep -w "error" logfile.txt

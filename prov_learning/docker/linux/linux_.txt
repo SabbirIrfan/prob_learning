@@ -1,0 +1,5 @@
+regex
+
+head -n [number of line to show ] filepath
+
+tail  -n [number of line to show ] filepath
