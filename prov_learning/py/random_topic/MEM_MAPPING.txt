@@ -1,0 +1,18 @@
+QUESTION::
+
+how a file is written ?
+
+
+file:: in disk 
+
+Address space:: kernel mem_map the page of the file to write form the address space to memory::
+
+what if it is a dirty write?? (already written?)
+
+check the M:modify bit from PTE:: (page table entry ) if bit is set then the its a dirty write
+
+QUESTION:: who set the modify bit?? Answer :: MMU // memory management unit
+
+
+
+
