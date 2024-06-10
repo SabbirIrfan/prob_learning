@@ -23,5 +23,9 @@
     -->hab = self.hby.habByName(name=self.alias)
     retrieve the habitat to who the interaction will happen
     -->hab.interact(data=self.data)
-    
+    -->communicate to
+        --- endpoints of witness to send message about the interact waits for receipts
+        or
+        --- to witness of the identifier (in hab) and propage the changes to all the witness
+
    
