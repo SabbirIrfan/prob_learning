@@ -22,6 +22,8 @@
 ## rotateDO
 
 1. get hab by name. ( A habitat manages the keys and events associated with a specific identifier.)
-2. add or remove witness?? not required
+2. add or remove witness >> if the args --witness-add or -cut is true 
+   1. get the existing witness from hab.kever.wits
+   2. add or cut from the hab witness >> kever>> key event verifier
 3. rotate key using hab.rotate.
 4. use hab.kever (key event verifier) to confirm the event (rotation) with winess and delegation
