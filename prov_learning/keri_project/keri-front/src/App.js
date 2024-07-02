@@ -1,11 +1,17 @@
 
 import OtpForm from './component/otpPage.jsx';
-
-
+import Container from 'react-bootstrap/Container';
 
 const App = () => {
   return (
-    <OtpForm/>
+    <>
+
+      <Container style={{width: "50%", marginTop: "100px"}}>
+        
+        <OtpForm />
+      </Container>
+    
+    </>
   );
 }
 
