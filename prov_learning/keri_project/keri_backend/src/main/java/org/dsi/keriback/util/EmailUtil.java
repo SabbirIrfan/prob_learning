@@ -19,9 +19,14 @@ public class EmailUtil {
         mimeMessageHelper.setSubject("Verify OTP");
         mimeMessageHelper.setText("""
         <div>
-          <a href="http://localhost:8080/verify-account?email=%s&otp=%s" target="_blank">click link to verify</a>
+            <h3> your otp is %s</h3>
+             <h3> click image to verify</h3>  
+               
+          <a href="http://localhost:8080/verify-account?email=%s&otp=%s" target="_blank">
+           <img src="https://img.freepik.com/premium-vector/vector-illustration-green-verified-stamp-icon_666746-38.jpg?w=740" alt="Green Verified Stamp">
+          </a>
         </div>
-        """.formatted(email, otp), true);
+        """.formatted(otp,email, otp), true);
 
         javaMailSender.send(mimeMessage);
     }

@@ -7,7 +7,8 @@ import java.time.LocalDateTime;
 
 import org.dsi.keriback.Entity.User;
 import org.dsi.keriback.dto.LoginDto;
-import org.dsi.keriback.dto.RegisterDto;
+import org.dsi.keriback.dto.RegisterOtpDto;
+import org.dsi.keriback.dto.VerifyOtpDto;
 import org.dsi.keriback.repository.UserRepository;
 import org.dsi.keriback.util.EmailUtil;
 import org.dsi.keriback.util.OtpUtil;
@@ -24,7 +25,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public String register(RegisterDto registerDto) {
+    public String register(RegisterOtpDto registerDto) {
         String otp = otpUtil.generateOtp();
         try {
             emailUtil.sendOtpEmail(registerDto.getEmail(), otp);
@@ -32,16 +33,16 @@ public class UserService {
             throw new RuntimeException("Unable to send otp please try again");
         }
         User user = new User();
-        user.setName(registerDto.getName());
         user.setEmail(registerDto.getEmail());
-        user.setPassword(registerDto.getPassword());
         user.setOtp(otp);
         user.setOtpGeneratedTime(LocalDateTime.now());
         userRepository.save(user);
         return "User registration successful";
     }
 
-    public String verifyAccount(String email, String otp) {
+    public String verifyAccount(VerifyOtpDto verifyOTP) {
+        String email = verifyOTP.getEmail();
+        String otp = verifyOTP.getOtp();
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found with this email: " + email));
         if (user.getOtp().equals(otp) && Duration.between(user.getOtpGeneratedTime(),
@@ -72,8 +73,8 @@ public class UserService {
         User user = userRepository.findByEmail(loginDto.getEmail())
                 .orElseThrow(
                         () -> new RuntimeException("User not found with this email: " + loginDto.getEmail()));
-        if (!loginDto.getPassword().equals(user.getPassword())) {
-            return "Password is incorrect";
+        if (!loginDto.getOtp().equals(user.getOtp())) {
+            return "otp is incorrect";
         } else if (!user.isActive()) {
             return "your account is not verified";
         }
