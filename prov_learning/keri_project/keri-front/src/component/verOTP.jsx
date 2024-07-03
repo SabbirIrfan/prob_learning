@@ -3,17 +3,40 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/esm/Container';
 import { Link, useNavigate } from 'react-router-dom';
+import { useEmail } from './store/zustand';
 function VerOtp() {
+    const Email = useEmail();
     const navigate = useNavigate();
-    const handleSubmit = () => {
-        
-       navigate('/', { replace: true });
+    const handleSubmit = async (event) => {
+        const otp = document.getElementById('formBasicOtp').value;
+        event.preventDefault();
+       
+        try {
+          console.log({Email});
+    
+          const response = await fetch('http://localhost:8081/verify-account', {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email : Email, otp: otp}) // Pass the email in the request body
+          });
+    
+          if (response.ok) {
+            console.log('API call successful');
+            navigate('/');
+          } else {
+            console.error('API call failed');
+          }
+        } catch (error) {
+          console.error('Error occurred while making API call:', error);
+        }
     
       }
   return (
     <Container style={{width: "50%", marginTop: "100px"}}>
     <Form>
-    <Form.Group className="mb-3" controlId="formBasicEmail">
+    <Form.Group className="mb-3" controlId="formBasicOtp">
       <Form.Label>Enter OTP</Form.Label>
       <Form.Control type="email" placeholder="Enter OTP here" />
 
