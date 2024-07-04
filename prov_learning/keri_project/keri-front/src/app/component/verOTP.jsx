@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/esm/Container';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEmail } from './store/zustand';
-function VerOtp() {
+export const  VerOtp = ()=> {
     const Email = useEmail();
     const navigate = useNavigate();
     const handleSubmit = async (event) => {
@@ -23,16 +23,23 @@ function VerOtp() {
           });
     
           if (response.ok) {
-            console.log('API call successful');
+            console.log('OTP verified successfully');
             navigate('/');
           } else {
-            console.error('API call failed');
+            console.error('OTP verification failed-- try again');
+            displayWarningMessage('Incorrect OTP entered');
           }
         } catch (error) {
           console.error('Error occurred while making API call:', error);
         }
     
       }
+
+      const displayWarningMessage = (message) => { 
+       alert(message);
+      }
+      
+     
   return (
     <Container style={{width: "50%", marginTop: "100px"}}>
     <Form>
@@ -51,4 +58,3 @@ function VerOtp() {
   )
 }
 
-export default VerOtp
