@@ -10,7 +10,8 @@ import {
 } from "react-router-dom";
 import {VerOtp} from './component/verOTP.jsx';
 import { regWallet } from './component/regWallet.jsx';
-
+import { CreateWallet } from './component/CreateWallet'
+import {ClientDeails} from './component/ClientDeails.jsx'
 const router = createBrowserRouter([
   {
     path: "/",
@@ -19,10 +20,14 @@ const router = createBrowserRouter([
     path: "/otp",
     element: <VerOtp />,
   },
-  // {
-  //   path: "/register-wallet",
-  //   element: <regWallet/>
-  // },
+  {
+    path: "/createWallet",
+    element: <CreateWallet/>,
+  },
+  {
+    path:"clientDetails",
+    element: <ClientDeails/>
+  }
 ]);
 const Page = () => {
   return (

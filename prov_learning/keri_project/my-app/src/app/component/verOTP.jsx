@@ -24,7 +24,7 @@ export const  VerOtp = ()=> {
     
           if (response.ok) {
             console.log('OTP verified successfully');
-            navigate('/');
+            navigate('/createWallet');
           } else {
             console.error('OTP verification failed-- try again');
             displayWarningMessage('Incorrect OTP entered');
