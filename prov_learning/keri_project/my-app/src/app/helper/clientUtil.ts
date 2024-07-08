@@ -64,7 +64,7 @@ export async function resolveOobi(
 //     const clients: SignifyClient[] = await Promise.all(tasks);
 //     console.log(`SIGNIFY_SECRETS="${clients.map((i) => i.bran).join(',')}"`);
 //     return clients;
-}
+// }
 export async function getOrCreateClient(
     bran: string | undefined = undefined
 ): Promise<SignifyClient> {
