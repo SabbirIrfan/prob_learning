@@ -1,20 +1,28 @@
+"use client";
+
 import React from "react";
 import { Button, Form ,Container} from "react-bootstrap";
-import { useEmail, useSetOobiUrl, useSetAgentAid, useSetAid, useSetName } from "./store/zustand";
-import { useNavigate } from "react-router-dom";
+import { useEmail, useSetOobiUrl, useSetAgentAid, useSetAid, useSetName, useAid, useName, useAgentAid, useOobiUrl } from "../store/zustand";
 import signify from "signify-ts";
-import { waitOperation } from "./helper/clientUtil";
-import { resolveEnvironment } from './resolve-env';
-
+import { sleep, waitOperation } from "../component/helper/clientUtil";
+import { resolveEnvironment } from '../component/helper/resolve-env';
+import { useRouter } from "next/navigation";
+import { emit } from "process";
 const { url, bootUrl } = resolveEnvironment();
 
-export const CreateWallet = () => {
-  const navigate = useNavigate();
+const CreateWallet = () => {
+
+  const navigate = useRouter();
   const Email = useEmail();
   const setName = useSetName();
   const setAid =useSetAid();
   const setAgentAid = useSetAgentAid();
   const setOobiUrl = useSetOobiUrl();
+  const aid = useAid();
+  const name = useName();
+  const agentAid = useAgentAid();
+  const oobiUrl = useOobiUrl();
+  console.log(Email);
   const handleCreatingWallet = async () => {
     const name = document.getElementById("formBasicName").value;
     setName(name);
@@ -30,7 +38,7 @@ export const CreateWallet = () => {
     await client1.boot();
     await client1.connect();
     const state1 = await client1.state();
-   
+    
     const icpResult1 = await client1.identifiers().create('alice', {
         toad: 3,
         wits: [
@@ -43,51 +51,59 @@ export const CreateWallet = () => {
         client1,
         await icpResult1.op()
     );
-    
+
     let rpyResult1 = await client1
-    .identifiers()
-    .addEndRole('alice', 'agent', client1!.agent!.pre);
-await waitOperation(client1, await rpyResult1.op());  
+        .identifiers()
+        .addEndRole('alice', 'agent', client1.agent.pre);
+    await waitOperation(client1, await rpyResult1.op());
+    console.log("Alice's AID:", aid1.i);
   
-console.log("Alice's AID:", aid1.i);
+
+
+
+    setAid(aid1.i);
+    setAgentAid(state1.agent.i);
+    setOobiUrl(client1.oobis().client.url);
+
+   
+
     console.log(
       "Client 1 connected. Client AID:",
       state1.controller.state.i,
       "Agent AID: ",
       state1.agent.i,
       client1.oobis().client.url,
-    //   icpResult1,
-    //   client1.oobis().get('alice','agent')
+      "card aid == ",aid1.i,
+      client1.oobis().get('alice','agent')
+    
       
     );
-    setAid(state1.controller.state.i);
-    setAgentAid(state1.agent.i);
-    setOobiUrl(client1.oobis().client.url);
     try {
-      const response = await fetch("http://localhost:8081/createWallet", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: Email,
-          name: name,
-          aid: state1.controller.state.i,
-          agentAid: state1.agent.i,
-          oobiUrl: client1.oobis().client.url,
-        }),
-      });
-
-      if (response.ok) {
-        console.log("walletCreation Successfull");
-        navigate("/clientdetails");
-      } else {
-        console.error("wallet could not be created. try again");
+        const response = await fetch("http://localhost:8081/createWallet", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: Email,
+            name: name,
+            aid: aid1.i,
+            agentAid: state1.agent.i,
+            oobiUrl: client1.oobis().client.url,
+          }),
+        });
+  
+        if (response.ok) {
+          console.log("walletCreation Successfull");
+          navigate.push("/clientDetails");
+        } else {
+          console.error("wallet could not be created. try again");
+        }
+      } catch (error) {
+        console.error("Error occurred while making API call:", error);
       }
-    } catch (error) {
-      console.error("Error occurred while making API call:", error);
-    }
   };
+  
 
   return (
     <Container style={{width: "50%", marginTop: "100px"}}>
@@ -105,3 +121,4 @@ console.log("Alice's AID:", aid1.i);
     </Container>
   );
 };
+export default CreateWallet;

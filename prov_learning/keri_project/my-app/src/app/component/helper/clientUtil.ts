@@ -5,6 +5,14 @@ export function sleep(ms: number): Promise<void> {
         setTimeout(resolve, ms);
     });
 }
+export async function assertOperations(
+    ...clients: SignifyClient[]
+): Promise<void> {
+    for (const client of clients) {
+        const operations = await client.operations().list();
+        // expect(operations).toHaveLength(0);
+    }
+}
 
 export async function waitOperation<T = any>(
     client: SignifyClient,

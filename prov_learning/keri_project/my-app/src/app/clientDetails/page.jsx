@@ -1,15 +1,19 @@
+"use client";
 import React from "react";
 import { useStore } from "zustand";
-import { useAgentAid, useAid, useName, useOobiUrl } from "./store/zustand";
+import { useAgentAid, useAid, useName, useOobiUrl } from "../store/zustand";
 import { Container, ListGroup } from "react-bootstrap";
-
-export const ClientDeails = () => {
+import  KeriNav  from "../component/Navbar.jsx";
+const ClientDeails = () => {
   const aid = useAid();
   const name = useName();
   const agentAid = useAgentAid();
   const oobiUrl = useOobiUrl();
 
   return (
+    <>
+          <KeriNav />
+
     <div style={{ display: 'flex', border: '1px solid #F5F5F5', gap: '10px' }}>
     <div style={{ flex: '1' , padding: '10px', border: '2px solid #F5F5F5'}}>
 
@@ -24,7 +28,12 @@ export const ClientDeails = () => {
         <ListGroup.Item>Name: {name}</ListGroup.Item>
         <ListGroup.Item>Oobi URL: {oobiUrl}</ListGroup.Item>
       </ListGroup>
+
+      {/* <Button onClick={handleResolveOobi}>create wallet</Button> */}
     </div>
   </div>
+  </>
   );
 };
+
+export default ClientDeails;
