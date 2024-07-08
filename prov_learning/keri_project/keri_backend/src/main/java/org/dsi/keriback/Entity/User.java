@@ -6,6 +6,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import lombok.Data;
 
 @Entity
@@ -19,6 +23,10 @@ public class User {
     private String email;
     private String password;
     private boolean active;
+    private String aid;
+    private String agentAid;
+    private String oobiUrl;
     private String otp;
     private LocalDateTime otpGeneratedTime;
+
 }
