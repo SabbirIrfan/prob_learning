@@ -24,10 +24,15 @@ const  VerOtp = ()=> {
             body: JSON.stringify({ email : Email, otp: otp}) // Pass the email in the request body
           });
     
-          if (response.ok) {
+          if (response.status === 203) {
+            navigate.push('/clientDetails');
+
+          }
+          else if (response.ok) {
             console.log('OTP verified successfully');
             navigate.push('/createWallet');
-          } else {
+          }
+           else {
             console.error('OTP verification failed-- try again');
             displayWarningMessage('Incorrect OTP entered');
           }

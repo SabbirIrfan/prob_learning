@@ -16,7 +16,7 @@ import  KeriNav  from "../component/Navbar.jsx";
 
   const handleSubmit = async (event: { preventDefault: () => void; }) => {
     event.preventDefault();
-    const email = document.getElementById('formBasicEmail').value; // Get the email value from the form
+    const email: string = document.getElementById('formBasicEmail')!.value; // Get the email value from the form
     setEmail(email);
     try {
       console.log({email});

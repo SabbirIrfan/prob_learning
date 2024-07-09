@@ -2,12 +2,11 @@
 
 import React from "react";
 import { Button, Form ,Container} from "react-bootstrap";
-import { useEmail, useSetOobiUrl, useSetAgentAid, useSetAid, useSetName, useAid, useName, useAgentAid, useOobiUrl, useClient, useSetClient } from "../store/zustand";
+import { useEmail, useSetOobiUrl, useSetAid, useSetName, useAid, useName, useOobiUrl, useClient, useSetClient, useBran, useSetBran } from "../store/zustand";
 import signify from "signify-ts";
-import { sleep, waitOperation } from "../component/helper/clientUtil";
+import {  waitOperation } from "../component/helper/clientUtil";
 import { resolveEnvironment } from '../component/helper/resolve-env';
 import { useRouter } from "next/navigation";
-import { emit } from "process";
 const { url, bootUrl } = resolveEnvironment();
 
 const CreateWallet = () => {
@@ -16,18 +15,18 @@ const CreateWallet = () => {
   const Email = useEmail();
   const setName = useSetName();
   const setAid =useSetAid();
-  const setAgentAid = useSetAgentAid();
   const setOobiUrl = useSetOobiUrl();
   const aid = useAid();
   const name = useName();
-  const agentAid = useAgentAid();
+  const bran = useBran();
+  const setBran = useSetBran();
   const oobiUrl = useOobiUrl();
   const client = useClient();
   const setClient = useSetClient();
   console.log(Email);
   const handleCreatingWallet = async () => {
     const name = document.getElementById("formBasicName").value;
-    setName(name);
+    
     await signify.ready();
     const bran1 = signify.randomPasscode();
     const client1 = new signify.SignifyClient(
@@ -39,7 +38,11 @@ const CreateWallet = () => {
 
     await client1.boot();
     await client1.connect();
+
     setClient(client1);
+    setName(name);
+    setBran(bran1);
+    
     const state1 = await client1.state();
     
     const icpResult1 = await client1.identifiers().create(name, {
@@ -57,12 +60,11 @@ const CreateWallet = () => {
 
     let rpyResult1 = await client1
         .identifiers()
-        .addEndRole(name, 'agent', client1.agent.pre);
+        .addEndRole(name, 'agent', client1!.agent!.pre);
     await waitOperation(client1, await rpyResult1.op());
     console.log("Alice's AID:", aid1.i);
   
     setAid(aid1.i);
-    setAgentAid(state1.agent.i);
 
     const oobi1 = await client1.oobis().get(name, 'agent');
     console.log("-----------------------",oobi1.oobis[0],"-----------------------")
@@ -80,6 +82,10 @@ const CreateWallet = () => {
     
       
     );
+    // const client: signify.SignifyClient = await getOrCreateClient(bran1);
+    // console.log(client.identifiers.length);
+    // getOrCreateIdentifier(client, name);
+    
     try {
         const response = await fetch("http://localhost:8081/createWallet", {
           method: "POST",
@@ -90,14 +96,14 @@ const CreateWallet = () => {
             email: Email,
             name: name,
             aid: aid1.i,
-            agentAid: state1.agent.i,
+            bran: bran1,
             oobiUrl: oobi1.oobis[0],
           }),
         });
   
         if (response.ok) {
           console.log("walletCreation Successfull");
-          navigate.push("/clientDetails");
+          navigate.push("/clientHome");
         } else {
           console.error("wallet could not be created. try again");
         }
