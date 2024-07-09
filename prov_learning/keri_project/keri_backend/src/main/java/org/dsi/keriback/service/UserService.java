@@ -30,10 +30,11 @@ public class UserService {
     public String register(RegisterOtpDto registerDto) {
         Optional<User> optionalUser = userRepository.findByEmail(registerDto.getEmail());
         String otp = otpUtil.generateOtp();
-
+        // fix doing otp verification everytime?
         if(optionalUser.isPresent()){
             User user = optionalUser.get();
             try{
+
                 emailUtil.sendOtpEmail(registerDto.getEmail(),otp);
 //                user.setOtp(otp);
                 userRepository.save(user);
@@ -65,8 +66,15 @@ public class UserService {
         if (user.getOtp().equals(otp) && Duration.between(user.getOtpGeneratedTime(),
                 LocalDateTime.now()).getSeconds() < (360000)) {
             user.setActive(true);
+
             userRepository.save(user);
-            return "ok";
+            if(user.isWalletCreated()){
+                return "walletCreated Already";
+            }
+            else {
+                return "ok";
+            }
+
         }
         return "wrong";
     }
@@ -101,11 +109,18 @@ public class UserService {
         User user = userRepository.findByEmail(walletDto.getEmail())
                 .orElseThrow(()-> new RuntimeException("User not found with this email"+ walletDto.getEmail()));
         user.setAid(walletDto.getAid());
-        user.setAgentAid(walletDto.getAgentAid());
+        user.setBran(walletDto.getBran());
         user.setOobiUrl(walletDto.getOobiUrl());
         user.setName(walletDto.getName());
+        user.setWalletCreated(true);
         userRepository.save(user);
 
         return "Wallet Creation successful";
+    }
+    public  String getBran(String email){
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(()-> new RuntimeException("User not found with this email"+ email));
+        return  user.getBran();
+
     }
 }

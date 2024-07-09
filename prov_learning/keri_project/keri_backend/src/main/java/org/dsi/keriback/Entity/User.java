@@ -11,9 +11,12 @@ import java.util.List;
 import java.util.Map;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Data
+
 public class User {
 
     @Id
@@ -22,11 +25,13 @@ public class User {
     private String name;
     private String email;
     private String password;
-    private boolean active;
     private String aid;
-    private String agentAid;
+    private String bran;
     private String oobiUrl;
     private String otp;
+    private boolean active;
+    private boolean walletCreated;
     private LocalDateTime otpGeneratedTime;
+
 
 }

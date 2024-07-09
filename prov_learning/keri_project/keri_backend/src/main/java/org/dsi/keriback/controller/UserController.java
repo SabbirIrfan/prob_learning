@@ -39,20 +39,30 @@ public class UserController {
     @PutMapping("/verify-account")
     public ResponseEntity<String> verifyAccount(@RequestBody VerifyOtpDto verifyOTP) {
         HttpStatus badRequest = HttpStatus.BAD_REQUEST;
-        if(Objects.equals(userService.verifyAccount(verifyOTP), "ok")){
+        String verificationResult = userService.verifyAccount(verifyOTP);
+        if(Objects.equals(verificationResult, "ok")){
             return new ResponseEntity<>( HttpStatus.OK);
         }
+        else if(Objects.equals(verificationResult, "walletCreated Already")){
+            System.out.println(":HERE");
+            return new ResponseEntity<>( HttpStatus.OK); // httpstatus.valueof(203) after i can get the client from agent
+        }
+
         else return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: "+ "OTP does not match");
 
 
 
     }
-    @PutMapping("/regenerate-otp")
-    public ResponseEntity<String> regenerateOtp(@RequestParam String email) {
-        return new ResponseEntity<>(userService.regenerateOtp(email), HttpStatus.OK);
+    @GetMapping("/getBran")
+    public String getBran(@RequestParam  String email ){
+            return userService.getBran(email);
     }
-    @PutMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginDto loginDto) {
-        return new ResponseEntity<>(userService.login(loginDto), HttpStatus.OK);
-    }
+//    @PutMapping("/regenerate-otp")
+//    public ResponseEntity<String> regenerateOtp(@RequestParam String email) {
+//        return new ResponseEntity<>(userService.regenerateOtp(email), HttpStatus.OK);
+////    }
+//    @PutMapping("/login")
+//    public ResponseEntity<String> login(@RequestBody LoginDto loginDto) {
+//        return new ResponseEntity<>(userService.login(loginDto), HttpStatus.OK);
+//    }
 }
