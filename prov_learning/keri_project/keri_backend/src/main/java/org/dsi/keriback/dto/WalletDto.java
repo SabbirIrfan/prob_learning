@@ -8,7 +8,7 @@ import lombok.Setter;
 public class WalletDto {
     private  String name ;
     private String  email;
-    private String aid;
+    private String agentAid;
+    private String controllerAid;
     private String bran;
-    private String oobiUrl;
 }

@@ -6,11 +6,13 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import org.dsi.keriback.Entity.Aids;
 import org.dsi.keriback.Entity.User;
 import org.dsi.keriback.dto.LoginDto;
 import org.dsi.keriback.dto.RegisterOtpDto;
 import org.dsi.keriback.dto.VerifyOtpDto;
 import org.dsi.keriback.dto.WalletDto;
+import org.dsi.keriback.repository.AidRepository;
 import org.dsi.keriback.repository.UserRepository;
 import org.dsi.keriback.util.EmailUtil;
 import org.dsi.keriback.util.OtpUtil;
@@ -26,6 +28,8 @@ public class UserService {
     private EmailUtil emailUtil;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private AidRepository aidRepository;
 
     public String register(RegisterOtpDto registerDto) {
         Optional<User> optionalUser = userRepository.findByEmail(registerDto.getEmail());
@@ -34,9 +38,13 @@ public class UserService {
         if(optionalUser.isPresent()){
             User user = optionalUser.get();
             try{
+                if( Duration.between(user.getOtpGeneratedTime(),
+                                LocalDateTime.now()).getSeconds() >= (360000)){
+                    user.setOtp(otp);
+                    user.setOtpGeneratedTime(LocalDateTime.now());
 
-                emailUtil.sendOtpEmail(registerDto.getEmail(),otp);
-//                user.setOtp(otp);
+                }
+                emailUtil.sendOtpEmail(registerDto.getEmail(),user.getOtp());
                 userRepository.save(user);
                 return "email already exists - so new otp sent";
 
@@ -108,19 +116,19 @@ public class UserService {
     public String createWallet(WalletDto walletDto){
         User user = userRepository.findByEmail(walletDto.getEmail())
                 .orElseThrow(()-> new RuntimeException("User not found with this email"+ walletDto.getEmail()));
-        user.setAid(walletDto.getAid());
-        user.setBran(walletDto.getBran());
-        user.setOobiUrl(walletDto.getOobiUrl());
         user.setName(walletDto.getName());
+        user.setControllerId(walletDto.getControllerAid());
+        user.setAgentId(walletDto.getAgentAid());
         user.setWalletCreated(true);
+        user.setBran(walletDto.getBran());
         userRepository.save(user);
 
         return "Wallet Creation successful";
     }
-    public  String getBran(String email){
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(()-> new RuntimeException("User not found with this email"+ email));
-        return  user.getBran();
+    public  String getBran(String name){
+        Aids aids = aidRepository.findByName(name)
+                .orElseThrow(()-> new RuntimeException("User not found with this name"+ name));
+        return aids.getBran() ;
 
     }
 }

@@ -1,14 +1,13 @@
 package org.dsi.keriback.Entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import lombok.Data;
 import lombok.Getter;
@@ -24,11 +23,13 @@ public class User {
     private int id;
     private String name;
     private String email;
-    private String password;
-    private String aid;
+    private String controllerId;
+    private String agentId;
     private String bran;
-    private String oobiUrl;
-    private String otp;
+//    @OneToMany
+    @OneToMany
+    private List<Aids> aids;
+    private String  otp;
     private boolean active;
     private boolean walletCreated;
     private LocalDateTime otpGeneratedTime;
