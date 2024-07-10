@@ -18,6 +18,8 @@ import  KeriNav  from "../component/Navbar.jsx";
     event.preventDefault();
     const email: string = document.getElementById('formBasicEmail')!.value; // Get the email value from the form
     setEmail(email);
+    localStorage.setItem('email', email);
+
     try {
       console.log({email});
 

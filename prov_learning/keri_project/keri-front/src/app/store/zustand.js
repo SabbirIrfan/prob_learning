@@ -7,12 +7,14 @@ export const useStore = create((set) => ({
     aid:"",
     bran:"",
     oobiUrl:"",
+    ids:[],
+    setIds: (ids) => set({ ids: ids }),
     setClient: (client) => set({ client: client }),
     setOobiUrl: (oobiUrl) => set({ oobiUrl: oobiUrl }),
     setAid: (aid) => set({ aid: aid }),
     setBran: (bran) => set({ bran: bran }),
     setName: (name) => set({ name: name }),
-  setEmail: (email) => set({ email: email }),
+    setEmail: (email) => set({ email: email }),
 }));
 
 // Selector functions
@@ -28,3 +30,5 @@ export const useClient = () => useStore((state) => state.client);
 export const useSetClient = () => useStore((state) => state.setClient);
 export const useBran = () => useStore((state) => state.bran);
 export const useSetBran = () => useStore((state) => state.setBran);
+export const useIds = () => useStore((state) => state.ids);
+export const useSetIds = () => useStore((state) => state.setIds);

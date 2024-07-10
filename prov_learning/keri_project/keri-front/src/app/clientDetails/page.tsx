@@ -1,18 +1,31 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import signify from "signify-ts";
+import signify, { Identifier } from "signify-ts";
 import {
   useAid,
   useBran,
   useClient,
   useName,
   useOobiUrl,
+  useEmail,
+  useSetName,
+  useSetOobiUrl,
+  useSetAid,
+  useSetBran,
+  useSetEmail,
+  useSetClient,
+  useSetIds,
 } from "../store/zustand";
-import { Button, Container, Form, ListGroup } from "react-bootstrap";
+import {
+  Accordion,
+  Button,
+  Form,
+  ListGroup,
+} from "react-bootstrap";
 import KeriNav from "../component/Navbar.jsx";
 import {
-  getClient,
   getOrCreateClient,
+  getOrCreateIdentifier,
   resolveOobi,
 } from "../helper/clientUtil";
 const ClientDeails = () => {
@@ -20,81 +33,74 @@ const ClientDeails = () => {
   const aid = useAid();
   const name = useName();
   const bran = useBran();
-  const oobiUrl = useOobiUrl();
   const client = useClient();
+  const email = useEmail();
+  const setAid = useSetAid();
+  const setClient = useSetClient();
   let gotClient: signify.SignifyClient;
   useEffect(() => {
     handleFetchingClient();
   }, []);
   const handleFetchingClient = async () => {
     gotClient = await getOrCreateClient(bran);
+    setClient(gotClient);
+
+    
     const contacts = await gotClient.contacts().list();
     setContactList(contacts);
-    console.log(gotClient);
+    console.log(contacts);
     
   };
 
-  const handleResolveOobi = async () => {
-    const name2: string = document.getElementById("formBasicName")!.value;
-    const oobi2: string = document.getElementById("formBasicOobi")!.value;
-
-    console.log(oobi2);
-    await resolveOobi(client, oobi2, name2);
-    console.log(name, " has resolved", name2, "'s OOBI");
-    const resolvedContact = contactList.find(
-      (contact: { alias: string }) => contact.alias === name2
-    );
-
-
-    console.log(resolvedContact);
-    console.log(contactList);
-
-    }
+  
 
   return (
     <>
       <KeriNav />
 
       <div
-        style={{ display: "flex", border: "1px solid #F5F5F5", gap: "10px" }}
+        style={{ display: "flex", border: "1px solid #F5F5F5", gap: "5px" }}
       >
         <div
-          style={{ flexBasis: "30%",whiteSpace: "nowrap", padding: "10px", border: "2px solid #F5F5F5" }}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            flexBasis: "30%",
+            whiteSpace: "nowrap",
+            padding: "10px",
+            border: "2px solid #F5F5F5",
+          }}
         >
-          
-          <ul>
-  {contactList.map((contact: { alias: string; role: string }, index: number) => (
-    index >= 3 && ( // Display items starting from the fourth item
-      <li key={contact.id} style={{ padding: "10px", border: "2px solid #F5F5F5", fontSize: "14px" }}>
-        {contact.alias} --- {contact.id}
-      </li>
-    )
-  ))}
-</ul>
-          {/* contact listss */}
+          <div>
+            <ul>
+              <h4>Contact List</h4>
+              {contactList.map(
+                (contact: { alias: string; role: string }, index: number) =>
+                  index >= 3 && ( // Display items starting from the fourth item
+                    <li
+                      key={contact.id}
+                      style={{
+                        padding: "10px",
+                        border: "2px solid #F5F5F5",
+                        fontSize: "14px",
+                      }}
+                    >
+                      {contact.alias} --- {contact.id}
+                    </li>
+                  )
+              )}
+            </ul>
+          </div>
+         
         </div>
-        <div style={{flexBasis: "70%" }}>
+        <div style={{flexGrow: "60%" }}>
           <h2>Client Details</h2>
           <ListGroup>
-            <ListGroup.Item>AID: {aid}</ListGroup.Item>
-            <ListGroup.Item>Bran: {bran}</ListGroup.Item>
             <ListGroup.Item>Name: {name}</ListGroup.Item>
-            <ListGroup.Item>Oobi URL: {oobiUrl}</ListGroup.Item>
+            <ListGroup.Item>email: {email}</ListGroup.Item>
+            <ListGroup.Item>Controller: {aid}</ListGroup.Item>
+            <ListGroup.Item>Bran: {bran}</ListGroup.Item>
           </ListGroup>
-          <Form>
-            <Form.Group className="mb-3" controlId="formBasicName">
-              <Form.Label>Enter oobi url holder name</Form.Label>
-              <Form.Control type="text" placeholder="alias Name here" />
-              <Form.Text className="text-muted"></Form.Text>
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicOobi">
-              <Form.Label>Enter oobi url to resolve</Form.Label>
-              <Form.Control type="url" placeholder="oobi url here" />
-              <Form.Text className="text-muted"></Form.Text>
-            </Form.Group>
-
-            <Button onClick={handleResolveOobi}>Resolve OOBI</Button>
-          </Form>
         </div>
       </div>
     </>

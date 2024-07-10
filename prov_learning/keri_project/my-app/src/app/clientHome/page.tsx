@@ -28,7 +28,7 @@ const clientHome = () => {
             
             <ListGroup style={{display: "flex", flexDirection: "row", gap: "30px",}}>
                 <ListGroup.Item>Name: {name}</ListGroup.Item>
-              <ListGroup.Item>AID: {aid}</ListGroup.Item>
+              <ListGroup.Item>Controller Id: {aid}</ListGroup.Item>
             </ListGroup>
           </div>
           <div style={{ flex: "3" }}>
