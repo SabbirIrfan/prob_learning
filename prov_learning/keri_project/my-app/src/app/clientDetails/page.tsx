@@ -56,7 +56,7 @@ const ClientDeails = () => {
 
   return (
     <>
-      <KeriNav />
+      {/* <KeriNav /> */}
 
       <div
         style={{ display: "flex", border: "1px solid #F5F5F5", gap: "5px" }}

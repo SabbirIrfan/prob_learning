@@ -9,10 +9,11 @@ import KeriNav from '../component/Navbar';
     const alias = useIds();
     const client = useClient();
     const name = useName();
+    const [count, setCount] = useState(0);
     
     useEffect(() => {
         handleIdentifiersOobi();
-      }, []);
+      }, [count]);
 
       const handleIdentifiersOobi = async () => {
             for(let i = 0; i<alias.length; i++){
@@ -22,6 +23,7 @@ import KeriNav from '../component/Navbar';
                 console.log(oobi.oobis[0]);
                 
             }
+            setCount(1);
       }
 
     const handleResolveOobi = async () => {
@@ -36,7 +38,7 @@ import KeriNav from '../component/Navbar';
       };
   return (
     <div>
-        <KeriNav />
+        {/* <KeriNav /> */}
         <div style={{display:"flex", flexDirection:"column", gap:"10px",}}>
         <div style={{flex:"1", paddingLeft:"30px"}}>
             <ul>
@@ -52,7 +54,15 @@ import KeriNav from '../component/Navbar';
                         fontSize: "14px",
                       }}
                     >
-                      {ids.name} --- {ids.prefix} --- {ids.oobi}
+                      {ids.name} --- {ids.prefix} ---
+                       <Accordion defaultActiveKey="0"  >
+                        <Accordion.Item eventKey="1" >
+                          <Accordion.Header style={{padding:"1"}} >OOBI</Accordion.Header>
+                          <Accordion.Body>
+                            {ids.oobi}
+                          </Accordion.Body>
+                        </Accordion.Item>
+                      </Accordion>
                     </li>
                   )
               )}

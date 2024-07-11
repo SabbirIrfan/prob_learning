@@ -33,7 +33,7 @@ import { Container } from 'react-bootstrap';
 const Page = () => {
   return (
     <div className="App">
-      <KeriNav />
+      {/* <KeriNav /> */}
       {/* <RouterProvider router={router} /> */}
       <Container style={{width: "50%", marginTop: "100px"}}>
          <OtpForm />

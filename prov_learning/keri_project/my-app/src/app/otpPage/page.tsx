@@ -4,7 +4,6 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import {  useSetEmail } from '../store/zustand';
 import { useRouter } from 'next/navigation';
-import  KeriNav  from "../component/Navbar.jsx";
 
 // import stringify from 'signify-ts';
 
