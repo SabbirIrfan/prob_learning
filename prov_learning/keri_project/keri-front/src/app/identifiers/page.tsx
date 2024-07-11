@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from 'react'
 import { useClient, useIds, useName } from '../store/zustand';
-import { Accordion, Button, Form } from 'react-bootstrap';
+import { Accordion, Button, Container, Form } from 'react-bootstrap';
 import { resolveOobi } from '../helper/clientUtil';
 import KeriNav from '../component/Navbar';
 
@@ -9,10 +9,11 @@ import KeriNav from '../component/Navbar';
     const alias = useIds();
     const client = useClient();
     const name = useName();
+    const [count, setCount] = useState(0);
     
     useEffect(() => {
         handleIdentifiersOobi();
-      }, []);
+      }, [count]);
 
       const handleIdentifiersOobi = async () => {
             for(let i = 0; i<alias.length; i++){
@@ -22,6 +23,7 @@ import KeriNav from '../component/Navbar';
                 console.log(oobi.oobis[0]);
                 
             }
+            setCount(1);
       }
 
     const handleResolveOobi = async () => {
@@ -36,29 +38,51 @@ import KeriNav from '../component/Navbar';
       };
   return (
     <div>
-        <KeriNav />
+        {/* <KeriNav /> */}
         <div style={{display:"flex", flexDirection:"column", gap:"10px",}}>
-        <div style={{flex:"1", paddingLeft:"30px"}}>
+        <div style={{flex:"1"}}>
+
             <ul>
-              <h4>Identifiers List</h4>
+              <Container>
+              <Accordion defaultActiveKey="0">
+              <Accordion.Item eventKey="1">
+              <Accordion.Header style={{display:"flex", flexDirection:"column"}}>Identifiers</Accordion.Header>
+              <Accordion.Body>
               {alias.map(
                 (ids: { name: string; prefix: string ; oobi: string}, index: number) =>
                   (
                     <li
                       key={ids.name}
                       style={{
-                        padding: "10px",
+                        backgroundColor: "#55F5F5",
+                        marginBottom: "10px",
                         border: "2px solid #F5F5F5",
-                        fontSize: "14px",
+                        fontSize: "16px",
+                        
                       }}
                     >
-                      {ids.name} --- {ids.prefix} --- {ids.oobi}
+                      alias->{ids.name} || AID->{ids.prefix} ---
+                       <Accordion defaultActiveKey="0"  >
+                        <Accordion.Item eventKey="1" >
+                          <Accordion.Header style={{ padding:"0"}} >OOBI</Accordion.Header>
+                          <Accordion.Body style={{width:"100%", wordWrap:"break-word"}}>
+                            {ids.oobi}
+                          </Accordion.Body>
+                        </Accordion.Item>
+                      </Accordion>
+
                     </li>
                   )
               )}
+              </Accordion.Body>
+              </Accordion.Item>
+              </Accordion>
+
+              </Container>
             </ul>
           </div>
          <div style={{width:"100%", paddingLeft:"30px"}}>
+          <Container>
             <Accordion defaultActiveKey="0">
               <Accordion.Item eventKey="0">
                 <Accordion.Header>Resolve OOBI</Accordion.Header>
@@ -79,6 +103,7 @@ import KeriNav from '../component/Navbar';
                 </Accordion.Body>
               </Accordion.Item>
             </Accordion>
+            </Container>
           </div>
           </div>
     </div>

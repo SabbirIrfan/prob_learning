@@ -1,3 +1,4 @@
+"use client";
 import Container from "react-bootstrap/Container";
 import { Navbar, Button } from "react-bootstrap";
 import { useAid } from "../store/zustand";

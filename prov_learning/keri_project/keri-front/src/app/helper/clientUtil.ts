@@ -24,7 +24,7 @@ export async function waitOperation<T = any>(
         op = await client.operations().get(op);
     }
 
-    // op = await client.operations().wait(op, { signal: signal ?? AbortSignal.timeout(30000) });
+    op = await client.operations().wait(op, { signal: signal ?? AbortSignal.timeout(30000) });
     await deleteOperations(client, op);
 
     return op;
