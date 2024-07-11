@@ -2,10 +2,7 @@ package org.dsi.keriback.controller;
 
 
 import org.apache.catalina.core.ApplicationFilterChain;
-import org.dsi.keriback.dto.LoginDto;
-import org.dsi.keriback.dto.RegisterOtpDto;
-import org.dsi.keriback.dto.VerifyOtpDto;
-import org.dsi.keriback.dto.WalletDto;
+import org.dsi.keriback.dto.*;
 import org.dsi.keriback.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRange;
@@ -26,14 +23,19 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/createWallet")
-    public  ResponseEntity<String > createWallet(@RequestBody WalletDto walletDto){
-
-        return new ResponseEntity<>(userService.createWallet(walletDto), HttpStatus.OK);
-    }
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody RegisterOtpDto registerDto) {
         return new ResponseEntity<>(userService.register(registerDto), HttpStatus.OK);
+    }
+
+    @PostMapping("/createWallet")
+    public  ResponseEntity<String > createWallet(@RequestBody WalletDto walletDto){
+        return new ResponseEntity<>(userService.createWallet(walletDto), HttpStatus.OK);
+    }
+    @PostMapping("/create-aid")
+    public ResponseEntity<String> createAid(@RequestBody AidDto aidDto){
+        return new ResponseEntity<>(userService.createAid(aidDto), HttpStatus.OK);
+
     }
 
     @PutMapping("/verify-account")
@@ -44,7 +46,7 @@ public class UserController {
             return new ResponseEntity<>( HttpStatus.OK);
         }
         else if(Objects.equals(verificationResult, "walletCreated Already")){
-            System.out.println(":HERE");
+//            System.out.println(":HERE");
             return new ResponseEntity<>( HttpStatus.OK); // httpstatus.valueof(203) after i can get the client from agent
         }
 
@@ -57,12 +59,17 @@ public class UserController {
     public String getBran(@RequestParam  String email ){
             return userService.getBran(email);
     }
-//    @PutMapping("/regenerate-otp")
-//    public ResponseEntity<String> regenerateOtp(@RequestParam String email) {
-//        return new ResponseEntity<>(userService.regenerateOtp(email), HttpStatus.OK);
-////    }
-//    @PutMapping("/login")
-//    public ResponseEntity<String> login(@RequestBody LoginDto loginDto) {
-//        return new ResponseEntity<>(userService.login(loginDto), HttpStatus.OK);
-//    }
+
+
 }
+/*
+    @PutMapping("/regenerate-otp")
+    public ResponseEntity<String> regenerateOtp(@RequestParam String email) {
+        return new ResponseEntity<>(userService.regenerateOtp(email), HttpStatus.OK);
+    }
+    @PutMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginDto loginDto) {
+        return new ResponseEntity<>(userService.login(loginDto), HttpStatus.OK);
+    }
+
+ */

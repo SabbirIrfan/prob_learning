@@ -8,12 +8,12 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Aids {
+public class Aid {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String name;
+    private String email;
+    private String alias;
     private String aid;
-    private String bran;
     private String oobiUrl;
 }

@@ -4,14 +4,12 @@ package org.dsi.keriback.service;
 import jakarta.mail.MessagingException;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
-import org.dsi.keriback.Entity.Aids;
+import org.dsi.keriback.Entity.Aid;
 import org.dsi.keriback.Entity.User;
-import org.dsi.keriback.dto.LoginDto;
-import org.dsi.keriback.dto.RegisterOtpDto;
-import org.dsi.keriback.dto.VerifyOtpDto;
-import org.dsi.keriback.dto.WalletDto;
+import org.dsi.keriback.dto.*;
 import org.dsi.keriback.repository.AidRepository;
 import org.dsi.keriback.repository.UserRepository;
 import org.dsi.keriback.util.EmailUtil;
@@ -87,32 +85,8 @@ public class UserService {
         return "wrong";
     }
 
-    public String regenerateOtp(String email) {
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found with this email: " + email));
-        String otp = otpUtil.generateOtp();
-        try {
-            emailUtil.sendOtpEmail(email, otp);
-        } catch (MessagingException e) {
-            throw new RuntimeException("Unable to send otp please try again");
-        }
-        user.setOtp(otp);
-        user.setOtpGeneratedTime(LocalDateTime.now());
-        userRepository.save(user);
-        return "Email sent... please verify account within 1 minute";
-    }
 
-    public String login(LoginDto loginDto) {
-        User user = userRepository.findByEmail(loginDto.getEmail())
-                .orElseThrow(
-                        () -> new RuntimeException("User not found with this email: " + loginDto.getEmail()));
-        if (!loginDto.getOtp().equals(user.getOtp())) {
-            return "otp is incorrect";
-        } else if (!user.isActive()) {
-            return "your account is not verified";
-        }
-        return "Login successful";
-    }
+
     public String createWallet(WalletDto walletDto){
         User user = userRepository.findByEmail(walletDto.getEmail())
                 .orElseThrow(()-> new RuntimeException("User not found with this email"+ walletDto.getEmail()));
@@ -125,10 +99,65 @@ public class UserService {
 
         return "Wallet Creation successful";
     }
-    public  String getBran(String name){
-        Aids aids = aidRepository.findByName(name)
-                .orElseThrow(()-> new RuntimeException("User not found with this name"+ name));
-        return aids.getBran() ;
+
+    public String createAid(AidDto aidDto){
+        Optional<Aid> aidOptional = aidRepository.findByAlias(aidDto.getAlias());
+        Optional<User> userOptional = userRepository.findByEmail(aidDto.getEmail());
+
+        if(userOptional.isEmpty()){
+            return "wrong email";
+        }
+        User user =  userOptional.get();
+        if(aidOptional.isPresent()){
+            return "aid exists";
+        }
+
+        Aid aid = new Aid();
+        aid.setEmail(aidDto.getEmail());
+        aid.setAid(aidDto.getAid());
+        aid.setAlias(aidDto.getAlias());
+        aid.setOobiUrl(aidDto.getOobiUrl());
+
+        List<Aid> userAids = user.getAids();
+        userAids.add(aid);
+        aidRepository.save(aid);
+        userRepository.save(user);
+
+        return "Aid has been registered";
+    }
+    public  String getBran(String email){
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(()-> new RuntimeException("User not found with this email"+ email));
+        return user.getBran() ;
 
     }
 }
+
+/*
+public String login(LoginDto loginDto) {
+    User user = userRepository.findByEmail(loginDto.getEmail())
+            .orElseThrow(
+                    () -> new RuntimeException("User not found with this email: " + loginDto.getEmail()));
+    if (!loginDto.getOtp().equals(user.getOtp())) {
+        return "otp is incorrect";
+    } else if (!user.isActive()) {
+        return "your account is not verified";
+    }
+    return "Login successful";
+}
+
+public String regenerateOtp(String email) {
+    User user = userRepository.findByEmail(email)
+            .orElseThrow(() -> new RuntimeException("User not found with this email: " + email));
+    String otp = otpUtil.generateOtp();
+    try {
+        emailUtil.sendOtpEmail(email, otp);
+    } catch (MessagingException e) {
+        throw new RuntimeException("Unable to send otp please try again");
+    }
+    user.setOtp(otp);
+    user.setOtpGeneratedTime(LocalDateTime.now());
+    userRepository.save(user);
+    return "Email sent... please verify account within 1 minute";
+}
+*/
