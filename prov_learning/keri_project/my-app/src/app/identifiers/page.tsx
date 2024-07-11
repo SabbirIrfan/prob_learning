@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from 'react'
 import { useClient, useIds, useName } from '../store/zustand';
-import { Accordion, Button, Form } from 'react-bootstrap';
+import { Accordion, Button, Container, Form } from 'react-bootstrap';
 import { resolveOobi } from '../helper/clientUtil';
 import KeriNav from '../component/Navbar';
 
@@ -40,35 +40,49 @@ import KeriNav from '../component/Navbar';
     <div>
         {/* <KeriNav /> */}
         <div style={{display:"flex", flexDirection:"column", gap:"10px",}}>
-        <div style={{flex:"1", paddingLeft:"30px"}}>
+        <div style={{flex:"1"}}>
+
             <ul>
-              <h4>Identifiers List</h4>
+              <Container>
+              <Accordion defaultActiveKey="0">
+              <Accordion.Item eventKey="1">
+              <Accordion.Header style={{display:"flex", flexDirection:"column"}}>Identifiers</Accordion.Header>
+              <Accordion.Body>
               {alias.map(
                 (ids: { name: string; prefix: string ; oobi: string}, index: number) =>
                   (
                     <li
                       key={ids.name}
                       style={{
-                        padding: "10px",
+                        backgroundColor: "#55F5F5",
+                        marginBottom: "10px",
                         border: "2px solid #F5F5F5",
-                        fontSize: "14px",
+                        fontSize: "16px",
+                        
                       }}
                     >
-                      {ids.name} --- {ids.prefix} ---
+                      alias->{ids.name} || AID->{ids.prefix} ---
                        <Accordion defaultActiveKey="0"  >
                         <Accordion.Item eventKey="1" >
-                          <Accordion.Header style={{padding:"1"}} >OOBI</Accordion.Header>
-                          <Accordion.Body>
+                          <Accordion.Header style={{ padding:"0"}} >OOBI</Accordion.Header>
+                          <Accordion.Body style={{width:"100%", wordWrap:"break-word"}}>
                             {ids.oobi}
                           </Accordion.Body>
                         </Accordion.Item>
                       </Accordion>
+
                     </li>
                   )
               )}
+              </Accordion.Body>
+              </Accordion.Item>
+              </Accordion>
+
+              </Container>
             </ul>
           </div>
          <div style={{width:"100%", paddingLeft:"30px"}}>
+          <Container>
             <Accordion defaultActiveKey="0">
               <Accordion.Item eventKey="0">
                 <Accordion.Header>Resolve OOBI</Accordion.Header>
@@ -89,6 +103,7 @@ import KeriNav from '../component/Navbar';
                 </Accordion.Body>
               </Accordion.Item>
             </Accordion>
+            </Container>
           </div>
           </div>
     </div>
