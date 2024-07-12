@@ -3,13 +3,13 @@ import React, { useEffect, useState } from 'react'
 import { useClient, useIds, useName } from '../store/zustand';
 import { Accordion, Button, Container, Form } from 'react-bootstrap';
 import { resolveOobi } from '../helper/clientUtil';
-import KeriNav from '../component/Navbar';
-
+import { useRouter } from 'next/navigation';
  const Identifiers = () => {
     const alias = useIds();
     const client = useClient();
     const name = useName();
     const [count, setCount] = useState(0);
+    const navigate = useRouter();
     
     useEffect(() => {
         handleIdentifiersOobi();
@@ -21,6 +21,7 @@ import KeriNav from '../component/Navbar';
                 const oobi = await client.oobis().get(alias[i].name, 'agent');
                 alias[i] = {...alias[i], 'oobi': oobi.oobis[0]};
                 console.log(oobi.oobis[0]);
+               
                 
             }
             setCount(1);
@@ -33,7 +34,7 @@ import KeriNav from '../component/Navbar';
         console.log(oobi2);
         await resolveOobi(client, oobi2, name2);
         console.log(name, " has resolved", name2, "'s OOBI");
-        
+        navigate.push('/clientDetails');        
         
       };
   return (
