@@ -17,10 +17,13 @@ import { useRouter } from 'next/navigation';
 
       const handleIdentifiersOobi = async () => {
             for(let i = 0; i<alias.length; i++){
-                console.log(alias[i].name);
+                // console.log(alias[i].name);
                 const oobi = await client.oobis().get(alias[i].name, 'agent');
                 alias[i] = {...alias[i], 'oobi': oobi.oobis[0]};
-                console.log(oobi.oobis[0]);
+                // console.log(oobi.oobis[0]);
+                // console.log(alias[i]);
+                const keyState = await client.keyStates().get(alias[i].prefix);
+                console.log(keyState[0].k[0]);
                
                 
             }

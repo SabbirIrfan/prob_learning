@@ -61,6 +61,7 @@ const createAid = () => {
     
     const handlePost = async (alias: string, email: string, aid: any, oobi: any) => {
         console.log("step 4", email, alias,  oobi);
+        console.log("Key state",await client.keyStates().get(alias));
         try {
             
             const response = await fetch('http://localhost:8081/create-aid', {

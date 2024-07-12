@@ -6,6 +6,7 @@ import { useEmail, useSetAid, useSetName, useSetClient, useSetBran } from "../st
 import signify from "signify-ts";
 import { resolveEnvironment } from '../component/helper/resolve-env';
 import { useRouter } from "next/navigation";
+import { getOrCreateIdentifier } from "../helper/clientUtil";
 const { url, bootUrl } = resolveEnvironment();
 
 const CreateWallet = () => {
@@ -52,6 +53,7 @@ const CreateWallet = () => {
     // const client: signify.SignifyClient = await getOrCreateClient(bran1);
     // console.log(client.identifiers.length);
     // getOrCreateIdentifier(client, name);
+    
     
     try {
         const response = await fetch("http://localhost:8081/createWallet", {

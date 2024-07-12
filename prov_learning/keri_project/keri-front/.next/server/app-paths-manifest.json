@@ -1,0 +1,7 @@
+{
+  "/createWallet/page": "app/createWallet/page.js",
+  "/clientHome/page": "app/clientHome/page.js",
+  "/identifiers/page": "app/identifiers/page.js",
+  "/createAid/page": "app/createAid/page.js",
+  "/clientDetails/page": "app/clientDetails/page.js"
+}
