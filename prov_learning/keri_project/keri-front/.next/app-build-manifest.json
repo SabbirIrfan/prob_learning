@@ -27,20 +27,10 @@
       "static/chunks/main-app.js",
       "static/chunks/app/clientHome/page.js"
     ],
-    "/createAid/page": [
+    "/_not-found/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/createAid/page.js"
-    ],
-    "/clientDetails/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/clientDetails/page.js"
-    ],
-    "/identifiers/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/identifiers/page.js"
+      "static/chunks/app/_not-found/page.js"
     ]
   }
 }

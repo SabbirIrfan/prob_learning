@@ -5,12 +5,14 @@ import { useClient, useEmail, useSetIds } from '../store/zustand';
 import { sleep, waitOperation } from '../helper/clientUtil';
 import KeriNav from '../component/Navbar';
 import { useRouter } from 'next/navigation';
-import { Operation } from 'signify-ts';
+import { Matter, MtrDex, Operation, Signer, SignifyClient, b } from 'signify-ts';
+import libsodium from 'libsodium-wrappers-sumo';
+import assert from 'assert';
 
 const createAid = () => {
     const navigate = useRouter();
     const setIds = useSetIds();
-    const client = useClient();
+    const client: SignifyClient = useClient();
     const email = useEmail();
     let alias: string;
     console.log(email);
@@ -62,6 +64,10 @@ const createAid = () => {
     const handlePost = async (alias: string, email: string, aid: any, oobi: any) => {
         console.log("step 4", email, alias,  oobi);
         console.log("Key state",await client.keyStates().get(alias));
+        await libsodium.ready;
+
+        // 
+
         try {
             
             const response = await fetch('http://localhost:8081/create-aid', {

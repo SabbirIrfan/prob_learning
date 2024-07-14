@@ -1,24 +1,63 @@
 "use client";
 
 import React from "react";
-import { Button, Form ,Container} from "react-bootstrap";
-import { useEmail, useSetAid, useSetName, useSetClient, useSetBran } from "../store/zustand";
-import signify from "signify-ts";
-import { resolveEnvironment } from '../component/helper/resolve-env';
+import { Button, Form, Container } from "react-bootstrap";
+import {
+  useEmail,
+  useSetAid,
+  useSetName,
+  useSetClient,
+  useSetBran,
+} from "../store/zustand";
+import signify, { Matter, MatterCodex, Signer, b } from "signify-ts";
+import { resolveEnvironment } from "../component/helper/resolve-env";
 import { useRouter } from "next/navigation";
-import { getOrCreateIdentifier } from "../helper/clientUtil";
+import signAndVerifyExample from "../component/singVerfer";
+import { from_base64, to_base64 } from "libsodium-wrappers-sumo";
+import { uint8ToUint32 } from "typed-array-consts";
+
 const { url, bootUrl } = resolveEnvironment();
 
 const CreateWallet = () => {
-
   const navigate = useRouter();
   const Email = useEmail();
   const setName = useSetName();
-  const setAid =useSetAid();
+  const setAid = useSetAid();
   const setBran = useSetBran();
   const setClient = useSetClient();
   console.log(Email);
+  MatterCodex;
+  //   function stringToUint8Array(str: string): Uint8Array {
+  //     return new TextEncoder().encode(str);
+  // }
+
   const handleCreatingWallet = async () => {
+    // signAndVerifyExample();
+    const r = b("your_private_key_here");
+
+    const uint8Array: Uint8Array = new Uint8Array(r);
+    const dataView = new DataView(uint8Array.buffer);
+    const uint32Array = new Uint32Array(uint8Array.length / 4);
+    for (let i = 0; i < uint32Array.length; i++) {
+      uint32Array[i] = dataView.getUint32(i * 4);
+
+      console.log(r);
+    }
+
+    // const signer = new Signer({raw: r });
+
+    // const y = atob('your_public_key_here');
+    // const signature = signer.sign(base64ToUint8Array(y));
+    // console.log("signature = ",signature);
+
+    // const ser = b('hello world');
+
+    // const cigar = signer.sign(ser);
+    // co
+    // console.log("whattt ciger",cigar,"what ciger code", cigar.code, "mtrdex edd",MtrDex.Ed25519_Sig);
+    // // console.log("whattt ciger raw",cigar.raw.length, Matter._rawSize(cigar.code));
+    // const result = signer.verfer.verify(cigar.raw, ser);
+    // console.log("whattt",result);
     const name = document.getElementById("formBasicName")!.value;
     await signify.ready();
     const bran1 = signify.randomPasscode();
@@ -35,56 +74,49 @@ const CreateWallet = () => {
     setClient(client1);
     setName(name);
     setBran(bran1);
-    
+
     const state1 = await client1.state();
     setAid(state1.controller.state.i);
-    
 
     console.log(
       "Client 1 connected. Client AID:",
       state1.controller.state.i,
       "Agent AID: ",
       state1.agent.i,
-      client1.oobis().client.url,
-     
-    
-      
+      client1.oobis().client.url
     );
     // const client: signify.SignifyClient = await getOrCreateClient(bran1);
     // console.log(client.identifiers.length);
     // getOrCreateIdentifier(client, name);
-    
-    
-    try {
-        const response = await fetch("http://localhost:8081/createWallet", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name: name,
-            email: Email,
-            controllerAid: state1.controller.state.i,
-            agentAid: state1.agent.i,
-            bran : bran1,
-          }),
-        });
-  
-        if (response.ok) {
-          console.log("walletCreation Successfull");
-          navigate.push("/clientHome");
-        } else {
-          console.error("wallet could not be created. try again");
-        }
-      } catch (error) {
-        console.error("Error occurred while making API call:", error);
-      }
-  };
-  
 
+    try {
+      const response = await fetch("http://localhost:8081/createWallet", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: name,
+          email: Email,
+          controllerAid: state1.controller.state.i,
+          agentAid: state1.agent.i,
+          bran: bran1,
+        }),
+      });
+
+      if (response.ok) {
+        console.log("walletCreation Successfull");
+        navigate.push("/clientHome");
+      } else {
+        console.error("wallet could not be created. try again");
+      }
+    } catch (error) {
+      console.error("Error occurred while making API call:", error);
+    }
+  };
 
   return (
-    <Container style={{width: "50%", marginTop: "100px"}}>
+    <Container style={{ width: "50%", marginTop: "100px" }}>
       <Form>
         <Form.Group className="mb-3" controlId="formBasicName">
           <Form.Label>Enter Wallet Name</Form.Label>
@@ -95,7 +127,6 @@ const CreateWallet = () => {
         </Form.Group>
 
         <Button onClick={handleCreatingWallet}>create wallet</Button>
-
       </Form>
     </Container>
   );
