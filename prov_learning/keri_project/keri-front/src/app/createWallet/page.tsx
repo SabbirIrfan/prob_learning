@@ -9,12 +9,9 @@ import {
   useSetClient,
   useSetBran,
 } from "../store/zustand";
-import signify, { Matter, MatterCodex, Signer, b } from "signify-ts";
+import signify, {  MatterCodex, b } from "signify-ts";
 import { resolveEnvironment } from "../component/helper/resolve-env";
 import { useRouter } from "next/navigation";
-import signAndVerifyExample from "../component/singVerfer";
-import { from_base64, to_base64 } from "libsodium-wrappers-sumo";
-import { uint8ToUint32 } from "typed-array-consts";
 
 const { url, bootUrl } = resolveEnvironment();
 
@@ -32,17 +29,9 @@ const CreateWallet = () => {
   // }
 
   const handleCreatingWallet = async () => {
-    // signAndVerifyExample();
-    const r = b("your_private_key_here");
+   
+   
 
-    const uint8Array: Uint8Array = new Uint8Array(r);
-    const dataView = new DataView(uint8Array.buffer);
-    const uint32Array = new Uint32Array(uint8Array.length / 4);
-    for (let i = 0; i < uint32Array.length; i++) {
-      uint32Array[i] = dataView.getUint32(i * 4);
-
-      console.log(r);
-    }
 
     // const signer = new Signer({raw: r });
 

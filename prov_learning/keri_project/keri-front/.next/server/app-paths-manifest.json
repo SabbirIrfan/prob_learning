@@ -1,7 +1,7 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
-  "/page": "app/page.js",
-  "/verifyOtp/page": "app/verifyOtp/page.js",
+  "/createAid/page": "app/createAid/page.js",
+  "/clientDetails/page": "app/clientDetails/page.js",
   "/createWallet/page": "app/createWallet/page.js",
-  "/clientHome/page": "app/clientHome/page.js"
+  "/clientHome/page": "app/clientHome/page.js",
+  "/page": "app/page.js"
 }

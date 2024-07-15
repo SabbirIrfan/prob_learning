@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation';
 
  export const OtpForm = () => {
   const setEmail = useSetEmail();
-  const router = useRouter();
+  const navigate = useRouter();
 
 
 
@@ -18,28 +18,30 @@ import { useRouter } from 'next/navigation';
     const email: string = document.getElementById('formBasicEmail')!.value; // Get the email value from the form
     setEmail(email);
     localStorage.setItem('email', email);
+    console.log(email);
+    navigate.push('/createWallet');
 
-    try {
-      console.log({email});
+    // try {
+    //   console.log({email});
 
-      const response = await fetch('http://localhost:8081/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email }) // Pass the email in the request body
-      });
+    //   const response = await fetch('http://localhost:8081/register', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify({ email }) // Pass the email in the request body
+    //   });
 
-      if (response.ok) {
-        console.log('API call successful');
-        router.push('/verifyOtp');
+    //   if (response.ok) {
+    //     console.log('API call successful');
+    //     router.push('/verifyOtp');
         
-      } else {
-        console.error('API call failed');
-      }
-    } catch (error) {
-      console.error('Error occurred while making API call:', error);
-    }
+    //   } else {
+    //     console.error('API call failed');
+    //   }
+    // } catch (error) {
+    //   console.error('Error occurred while making API call:', error);
+    // }
   };
 
 

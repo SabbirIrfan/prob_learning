@@ -5,19 +5,32 @@ import { useClient, useEmail, useSetIds } from '../store/zustand';
 import { sleep, waitOperation } from '../helper/clientUtil';
 import KeriNav from '../component/Navbar';
 import { useRouter } from 'next/navigation';
-import { Matter, MtrDex, Operation, Signer, SignifyClient, b } from 'signify-ts';
+import { Operation, Signer, SignifyClient, Verfer} from 'signify-ts';
+import signify from 'signify-ts';
 import libsodium from 'libsodium-wrappers-sumo';
 import assert from 'assert';
-
+const get32Bytes = (r: string | undefined) => {  
+    const originalString = r;  
+    const originalUint8Array = new TextEncoder().encode(originalString);  
+    const paddedUint8Array = new Uint8Array(32);  
+  
+    paddedUint8Array.set(originalUint8Array, 0);  
+    console.log(originalUint8Array);
+    if (originalUint8Array.length < 32) {  
+      paddedUint8Array.fill(0, originalUint8Array.length, 32);  
+    }  
+    return paddedUint8Array;  
+  }
 const createAid = () => {
     const navigate = useRouter();
     const setIds = useSetIds();
     const client: SignifyClient = useClient();
     const email = useEmail();
     let alias: string;
-    console.log(email);
-    useEffect(() => {
-    });
+
+    
+
+
     const handleCreateAid = (event: { preventDefault: () => void; }) => {
         event.preventDefault();
         alias = document.getElementById("formBasicName")!.value;
@@ -63,8 +76,27 @@ const createAid = () => {
     
     const handlePost = async (alias: string, email: string, aid: any, oobi: any) => {
         console.log("step 4", email, alias,  oobi);
-        console.log("Key state",await client.keyStates().get(alias));
+        const keystate = await client.keyStates().get(aid);
+        console.log("Key state",keystate[0].k[0]);
         await libsodium.ready;
+
+        signify.siginput;
+    
+        console.log(signify.b(keystate[0].k[0]));
+    const signer = new Signer({raw: signify.b(keystate[0].k[0]) });
+    const sttring ="hello world";
+    const signature = signer.sign(signify.b(sttring));
+    // console.log(signature);
+    const verfer = new Verfer({raw: signify.b(aid) });
+        // console.log("signature",signature.raw);
+    console.log(verfer.verify(signature.raw, sttring));
+
+    // const isValid = verfer.verify(signature.qb64, sttring);
+    // if (isValid) {
+    //     console.log('Signature is valid');
+    // } else {
+    //     console.log('Signature is invalid');
+    // }
 
         // 
 
