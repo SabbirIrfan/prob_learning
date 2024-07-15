@@ -1,4 +1,5 @@
 {
+  "/_not-found/page": "app/_not-found/page.js",
   "/createAid/page": "app/createAid/page.js",
   "/clientDetails/page": "app/clientDetails/page.js",
   "/createWallet/page": "app/createWallet/page.js",

@@ -8,19 +8,7 @@ import { useRouter } from 'next/navigation';
 import { Operation, Signer, SignifyClient, Verfer} from 'signify-ts';
 import signify from 'signify-ts';
 import libsodium from 'libsodium-wrappers-sumo';
-import assert from 'assert';
-const get32Bytes = (r: string | undefined) => {  
-    const originalString = r;  
-    const originalUint8Array = new TextEncoder().encode(originalString);  
-    const paddedUint8Array = new Uint8Array(32);  
-  
-    paddedUint8Array.set(originalUint8Array, 0);  
-    console.log(originalUint8Array);
-    if (originalUint8Array.length < 32) {  
-      paddedUint8Array.fill(0, originalUint8Array.length, 32);  
-    }  
-    return paddedUint8Array;  
-  }
+
 const createAid = () => {
     const navigate = useRouter();
     const setIds = useSetIds();
@@ -60,6 +48,7 @@ const createAid = () => {
                 console.log(
                     Identifiers,
                     icpResult1,
+                    aid1,
                     "OOBI: ",
                     oobi1.oobis[0]);
                 handlePost(alias, email,await aid1.i, oobi1.oobis[0]);
@@ -82,13 +71,13 @@ const createAid = () => {
 
         signify.siginput;
     
-        console.log(signify.b(keystate[0].k[0]));
+        // console.log(signify.b(keystate[0].k[0]));
+        console.log(keystate[0].k[0]);
     const signer = new Signer({raw: signify.b(keystate[0].k[0]) });
     const sttring ="hello world";
     const signature = signer.sign(signify.b(sttring));
-    // console.log(signature);
+    console.log(aid);
     const verfer = new Verfer({raw: signify.b(aid) });
-        // console.log("signature",signature.raw);
     console.log(verfer.verify(signature.raw, sttring));
 
     // const isValid = verfer.verify(signature.qb64, sttring);
