@@ -45,12 +45,12 @@ const createAid = () => {
                 const Identifiers = await client.identifiers().list();
                 setIds(Identifiers.aids);
     
-                console.log(
-                    Identifiers,
-                    icpResult1,
-                    aid1,
-                    "OOBI: ",
-                    oobi1.oobis[0]);
+                // console.log(
+                    // Identifiers,
+                    // icpResult1,
+                    // aid1,
+                    // "OOBI: ",
+                    // oobi1.oobis[0]);
                 handlePost(alias, email,await aid1.i, oobi1.oobis[0]);
                 
             
@@ -65,21 +65,7 @@ const createAid = () => {
     
     const handlePost = async (alias: string, email: string, aid: any, oobi: any) => {
         console.log("step 4", email, alias,  oobi);
-        const keystate = await client.keyStates().get(aid);
-        console.log("Key state",keystate[0].k[0]);
-        await libsodium.ready;
-
-        signify.siginput;
-    
-        // console.log(signify.b(keystate[0].k[0]));
-        console.log(keystate[0].k[0]);
-    const signer = new Signer({raw: signify.b(keystate[0].k[0]) });
-    const sttring ="hello world";
-    const signature = signer.sign(signify.b(sttring));
-    console.log(aid);
-    const verfer = new Verfer({raw: signify.b(aid) });
-    console.log(verfer.verify(signature.raw, sttring));
-
+        
     // const isValid = verfer.verify(signature.qb64, sttring);
     // if (isValid) {
     //     console.log('Signature is valid');

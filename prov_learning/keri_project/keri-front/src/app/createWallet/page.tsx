@@ -32,21 +32,6 @@ const CreateWallet = () => {
    
    
 
-
-    // const signer = new Signer({raw: r });
-
-    // const y = atob('your_public_key_here');
-    // const signature = signer.sign(base64ToUint8Array(y));
-    // console.log("signature = ",signature);
-
-    // const ser = b('hello world');
-
-    // const cigar = signer.sign(ser);
-    // co
-    // console.log("whattt ciger",cigar,"what ciger code", cigar.code, "mtrdex edd",MtrDex.Ed25519_Sig);
-    // // console.log("whattt ciger raw",cigar.raw.length, Matter._rawSize(cigar.code));
-    // const result = signer.verfer.verify(cigar.raw, ser);
-    // console.log("whattt",result);
     const name = document.getElementById("formBasicName")!.value;
     await signify.ready();
     const bran1 = signify.randomPasscode();

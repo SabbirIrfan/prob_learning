@@ -128,6 +128,26 @@ export async function getOrCreateIdentifier(
     const result: [string, string] = [id, oobi.oobis[0]];
     return result;
 }
+export async function getOrCreateContact(
+    client: SignifyClient,
+    name: string,
+    oobi: string
+): Promise<string> {
+    const list = await client.contacts().list(undefined, 'alias', `^${name}$`);
+    // console.log("contacts.list", list);
+    if (list.length > 0) {
+        const contact = list[0];
+        if (contact.oobi === oobi) {
+            // console.log("contacts.id", contact.id);
+            return contact.id;
+        }
+    }
+    let op = await client.oobis().resolve(oobi, name);
+    op = await waitOperation(client, op);
+    // console.log("oobis.resolve", op);
+    return op.response.i;
+}
+
 export async function hasEndRole(
     client: SignifyClient,
     alias: string,
