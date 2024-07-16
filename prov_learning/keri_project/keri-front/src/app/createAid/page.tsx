@@ -43,6 +43,7 @@ const createAid = () => {
     
                 const oobi1 = await client.oobis().get(alias, 'agent');
                 const Identifiers = await client.identifiers().list();
+                
                 setIds(Identifiers.aids);
     
                 // console.log(
@@ -51,6 +52,8 @@ const createAid = () => {
                     // aid1,
                     // "OOBI: ",
                     // oobi1.oobis[0]);
+                    // const exchange = await client.exchanges().get(aid1.i);
+                    // console.log("Exchanged something?",exchange);
                 handlePost(alias, email,await aid1.i, oobi1.oobis[0]);
                 
             

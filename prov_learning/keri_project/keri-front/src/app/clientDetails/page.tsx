@@ -11,12 +11,15 @@ import {
   useSetClient,
   useIds,
 } from "../store/zustand";
-import { ListGroup } from "react-bootstrap";
+import { Button, ListGroup } from "react-bootstrap";
+import { useRouter } from "next/navigation";
 
 import { getOrCreateClient, getOrCreateContact, getOrCreateIdentifier } from "../helper/clientUtil";
 import { sing } from "../singerVerfer/singverify";
 import { send } from "process";
+import Link from "next/link";
 const ClientDeails = () => {
+  const navigate = useRouter();
   const [contactList, setContactList] = useState([]);
   const alias = useIds();
   const aid = useAid();
@@ -36,34 +39,35 @@ const ClientDeails = () => {
     setClient(gotClient);
 
     const contacts = await gotClient.contacts().list();
-    
+    console.log(contacts[0]);
     
     setContactList(contacts);
     console.log(contacts);
-    const embed = {
+  //   const embed = {
       
-    };
+  //   };
   
-  const sender = alias.find((x) => x.name === "sabbir");
-     console.log(sender);
+  // const sender = alias.find((x) => x.name === "sabbir");
+  //    console.log(sender);
 
-     const receiver = await getOrCreateContact(gotClient,"irfanN","http://127.0.0.1:3902/oobi/EMBxR9JJOZzYNpa--zVIumwcDRBuwTsKK5vHLrGUxlGX/agent/EOVFMxCjvfC3BqkJM5yjJwwTZQ3w2PyBnwwOZV2SgBF3");
+    //  const receiver = await getOrCreateContact(gotClient,"irfanN","http://127.0.0.1:3902/oobi/EMBxR9JJOZzYNpa--zVIumwcDRBuwTsKK5vHLrGUxlGX/agent/EOVFMxCjvfC3BqkJM5yjJwwTZQ3w2PyBnwwOZV2SgBF3");
 
-  console.log("receiver",receiver);
-    const data = {
-      "message": "Hello from Signify",
-      "signature": sing(gotClient, "Hello from Signify", sender.prefix),
-    }
-    const  x:String[] = ["sabbir","irfan"];
-    console.log(await gotClient.exchanges().send("sabbir","messaging",sender,"message/send", data, embed, [receiver] ));
+  // console.log("receiver",receiver);
+  //   const data = {
+  //     "message": "Hello from Signify",
+  //     "signature": sing(gotClient, "Hello from Signify", sender.prefix),
+  //   }
+  //   const  x:String[] = ["sabbir","irfan"];
+  //   console.log(await gotClient.exchanges().send("sabbir","messaging",sender,"message/send", data, embed, [receiver] ));
     
     
   };
 
+
   return (
     <>
       {/* <KeriNav /> */}
-
+  
       <div style={{ display: "flex", border: "1px solid #F5F5F5", gap: "5px" }}>
         <div
           style={{
@@ -79,7 +83,7 @@ const ClientDeails = () => {
             <ul>
               <h4>Contact List</h4>
               {contactList.map(
-                (contact: { alias: string; id: string }, index: number) =>
+                (contact: { alias: string; id: string, oobi:string }, index: number) =>
                   index >= 3 && ( // Display items starting from the fourth item
                     <li
                       key={contact.id}
@@ -90,6 +94,13 @@ const ClientDeails = () => {
                       }}
                     >
                       {contact.alias} --- {contact.id}
+                     <Link href={{
+                      pathname: "/messaging",
+                      query: {alias : contact.alias,
+                          id : contact.id,
+                          oobi : contact.oobi  
+                      }
+                     }}>Message</Link>
                     </li>
                   )
               )}

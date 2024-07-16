@@ -1,7 +1,7 @@
 import React from 'react'
 import libsodium from 'libsodium-wrappers-sumo';
 import { useClient } from '../store/zustand';
-import signify, { SignifyClient } from 'signify-ts';
+import signify, { SignifyClient, Verfer } from 'signify-ts';
 import { Signer } from 'signify-ts';
 
 
@@ -41,5 +41,6 @@ export const sing = async (client : SignifyClient, data: string, aid: string) =>
     const signer = new Signer({raw: signify.b(keystate[0].k[0]) });
     const signature = signer.sign(signify.b(data));
     console.log(aid);
-    console.log("verifyyyyyyyyyyyyyyyy", signature.verfer?.verify(signature.raw, signify.b("sttring")));
+    console.log("verifyyyyyyyyyyyyyyyy", signature.verfer?.verify(signature.raw, signify.b(data)));
+    // const verify = new Verfer
 }

@@ -1,7 +1,10 @@
 {
-  "/createAid/page": "app/createAid/page.js",
-  "/clientDetails/page": "app/clientDetails/page.js",
-  "/clientHome/page": "app/clientHome/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
   "/identifiers/page": "app/identifiers/page.js",
-  "/page": "app/page.js"
+  "/messaging/page": "app/messaging/page.js",
+  "/clientDetails/page": "app/clientDetails/page.js",
+  "/page": "app/page.js",
+  "/createWallet/page": "app/createWallet/page.js",
+  "/clientHome/page": "app/clientHome/page.js",
+  "/createAid/page": "app/createAid/page.js"
 }
