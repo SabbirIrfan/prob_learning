@@ -1,13 +1,10 @@
 "use client";
-import ct, { useEffect, useState } from 'react'
 import { Button, Container, Form } from 'react-bootstrap';
 import { useClient, useEmail, useSetIds } from '../store/zustand';
 import { sleep, waitOperation } from '../helper/clientUtil';
-import KeriNav from '../component/Navbar';
 import { useRouter } from 'next/navigation';
 import { Operation, Signer, SignifyClient, Verfer} from 'signify-ts';
-import signify from 'signify-ts';
-import libsodium from 'libsodium-wrappers-sumo';
+
 
 const createAid = () => {
     const navigate = useRouter();
@@ -46,14 +43,7 @@ const createAid = () => {
                 
                 setIds(Identifiers.aids);
     
-                // console.log(
-                    // Identifiers,
-                    // icpResult1,
-                    // aid1,
-                    // "OOBI: ",
-                    // oobi1.oobis[0]);
-                    // const exchange = await client.exchanges().get(aid1.i);
-                    // console.log("Exchanged something?",exchange);
+              
                 handlePost(alias, email,await aid1.i, oobi1.oobis[0]);
                 
             
@@ -69,14 +59,7 @@ const createAid = () => {
     const handlePost = async (alias: string, email: string, aid: any, oobi: any) => {
         console.log("step 4", email, alias,  oobi);
         
-    // const isValid = verfer.verify(signature.qb64, sttring);
-    // if (isValid) {
-    //     console.log('Signature is valid');
-    // } else {
-    //     console.log('Signature is invalid');
-    // }
-
-        // 
+ 
 
         try {
             
@@ -98,7 +81,6 @@ const createAid = () => {
     };
         return (
             <>
-                {/* <KeriNav /> */}
                 <Container style={{ width: "50%", marginTop: "100px" }}>
                     <Form>
                         <Form.Group className="mb-3" controlId="formBasicName">

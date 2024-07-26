@@ -21,7 +21,7 @@ const  VerOtp = ()=> {
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ email : Email, otp: otp}) // Pass the email in the request body
+            body: JSON.stringify({ email : Email, otp: otp}) 
           });
     
           if (response.status === 203) {

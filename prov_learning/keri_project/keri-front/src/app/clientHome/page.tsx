@@ -21,7 +21,6 @@ const clientHome = () => {
           <div
             className="App"
           >
-            {/* <KeriNav /> */}
           </div>
           
           <div style={{ flex: "3" }}>

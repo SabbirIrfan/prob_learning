@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import signify, { Identifier, SignifyClient } from "signify-ts";
+import signify from "signify-ts";
 import {
   useAid,
   useBran,
@@ -11,12 +11,11 @@ import {
   useSetClient,
   useIds,
 } from "../store/zustand";
-import { Button, ListGroup } from "react-bootstrap";
+import {  ListGroup } from "react-bootstrap";
 import { useRouter } from "next/navigation";
 
-import { getOrCreateClient, getOrCreateContact, getOrCreateIdentifier } from "../helper/clientUtil";
-import { sing } from "../singerVerfer/singverify";
-import { send } from "process";
+import { getOrCreateClient } from "../helper/clientUtil";
+
 import Link from "next/link";
 const ClientDeails = () => {
   const navigate = useRouter();
@@ -43,23 +42,7 @@ const ClientDeails = () => {
     
     setContactList(contacts);
     console.log(contacts);
-  //   const embed = {
-      
-  //   };
   
-  // const sender = alias.find((x) => x.name === "sabbir");
-  //    console.log(sender);
-
-    //  const receiver = await getOrCreateContact(gotClient,"irfanN","http://127.0.0.1:3902/oobi/EMBxR9JJOZzYNpa--zVIumwcDRBuwTsKK5vHLrGUxlGX/agent/EOVFMxCjvfC3BqkJM5yjJwwTZQ3w2PyBnwwOZV2SgBF3");
-
-  // console.log("receiver",receiver);
-  //   const data = {
-  //     "message": "Hello from Signify",
-  //     "signature": sing(gotClient, "Hello from Signify", sender.prefix),
-  //   }
-  //   const  x:String[] = ["sabbir","irfan"];
-  //   console.log(await gotClient.exchanges().send("sabbir","messaging",sender,"message/send", data, embed, [receiver] ));
-    
     
   };
 

@@ -1,33 +1,26 @@
 "use client";
 
-import React from "react";
-import { Button, Form, Container } from "react-bootstrap";
 import {
-  useEmail,
-  useSetAid,
-  useSetName,
-  useSetClient,
-  useSetBran,
+  useEmail, useSetAid, useSetBran, useSetClient, useSetName,
+  
 } from "../store/zustand";
-import signify, {  MatterCodex, b } from "signify-ts";
+import signify from "signify-ts";
 import { resolveEnvironment } from "../component/helper/resolve-env";
+import { Button, Container, Form } from "react-bootstrap";
 import { useRouter } from "next/navigation";
-
 const { url, bootUrl } = resolveEnvironment();
 
 const CreateWallet = () => {
   const navigate = useRouter();
   const Email = useEmail();
-  const setName = useSetName();
-  const setAid = useSetAid();
   const setBran = useSetBran();
+  const setAid = useSetAid();
+  const setName = useSetName();
   const setClient = useSetClient();
-  console.log(Email);
-  MatterCodex;
-  //   function stringToUint8Array(str: string): Uint8Array {
-  //     return new TextEncoder().encode(str);
-  // }
 
+ 
+  console.log(Email);
+ 
   const handleCreatingWallet = async () => {
    
    
@@ -59,10 +52,7 @@ const CreateWallet = () => {
       state1.agent.i,
       client1.oobis().client.url
     );
-    // const client: signify.SignifyClient = await getOrCreateClient(bran1);
-    // console.log(client.identifiers.length);
-    // getOrCreateIdentifier(client, name);
-
+ 
     try {
       const response = await fetch("http://localhost:8081/createWallet", {
         method: "POST",

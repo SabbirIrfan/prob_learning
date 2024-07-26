@@ -5,8 +5,6 @@ import Form from 'react-bootstrap/Form';
 import {  useSetEmail } from '../store/zustand';
 import { useRouter } from 'next/navigation';
 
-// import stringify from 'signify-ts';
-
  export const OtpForm = () => {
   const setEmail = useSetEmail();
   const navigate = useRouter();
@@ -21,27 +19,7 @@ import { useRouter } from 'next/navigation';
     console.log(email);
     navigate.push('/createWallet');
 
-    // try {
-    //   console.log({email});
-
-    //   const response = await fetch('http://localhost:8081/register', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify({ email }) // Pass the email in the request body
-    //   });
-
-    //   if (response.ok) {
-    //     console.log('API call successful');
-    //     router.push('/verifyOtp');
-        
-    //   } else {
-    //     console.error('API call failed');
-    //   }
-    // } catch (error) {
-    //   console.error('Error occurred while making API call:', error);
-    // }
+    
   };
 
 
