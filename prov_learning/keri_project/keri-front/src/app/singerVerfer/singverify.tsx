@@ -39,5 +39,5 @@ export const sing = async (client : SignifyClient, data: string, aid: string) =>
     const signer = new Signer({raw: signify.b(keystate[0].k[0]) });
     const signature = signer.sign(signify.b(data));
     console.log(aid);
-    console.log("verifyyyyyyyyyyyyyyyy", signature.verfer?.verify(signature.raw, signify.b(data)));
+    console.log("verify", signature.verfer?.verify(signature.raw, signify.b(data)));
 }

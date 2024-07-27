@@ -1,10 +1,6 @@
-# Database Project
-## Presented by :
-### Reg. no : 2017331089
-### Name :  Md. Sabbir Irfan Chy
+# KERI Wallet Creation
 
 
-# Blend: Connecting People With Ideas & Resources
 
 
 ## Introduction
@@ -15,9 +11,7 @@
 
 ## Motivation & Goals :
 <ul>
-<li>Connect to the people(seniors) with similar research field. </li>
-<li>Showcasing work with shared resources, Github repository , Published paper links etc.</li>
-<li>Making research more easier.</li>
+
 
 </ul>
 
@@ -29,14 +23,8 @@
 <li>Framework: </li>
 <li>SpringBoot </li>
 <li>Next Js </li>
-<li></li>
-<li></li>
 <li>Database: </li>
 <li>MySQL</li>
-
-
-
-
 
 </ul>
 
