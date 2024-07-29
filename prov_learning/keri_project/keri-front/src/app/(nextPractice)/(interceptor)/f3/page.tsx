@@ -7,6 +7,8 @@ export default function F3() {
       F3 page
     <div>
       <Link href={"/f4"}>To F4</Link>
+      
+      <Link href={"/about"}>To about</Link>
     </div>
 
     </div>
