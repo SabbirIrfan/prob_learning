@@ -9,10 +9,10 @@ export const metadata = {
 
 }
 const aboutPage = () => {
-    if(true){
-        throw new Error("practice");
+    // if(true){
+    //     throw new Error("practice");
         
-    }
+    // }
   return (
     
     <div>aboutPage</div>

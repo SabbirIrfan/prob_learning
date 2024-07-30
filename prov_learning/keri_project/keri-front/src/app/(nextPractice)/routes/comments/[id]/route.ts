@@ -1,11 +1,15 @@
 import { cookies } from "next/headers";
 import { comments } from "../data"
+import { redirect } from "next/navigation";
 
 export async function GET(request:Request, {params}:{params:{id:string}}) {
+    const id = parseInt(params.id);
+    
+    if(comments.findIndex(comment => comment.id === id) === -1){
+        redirect("/routesf/comments");
+    }
 
-
-    const id = params.id
-    const queryComment = comments.find((comment)=> comment.id === parseInt(id));
+    const queryComment = comments.find((comment)=> comment.id === id);
     return  Response.json(queryComment);
     
 }
