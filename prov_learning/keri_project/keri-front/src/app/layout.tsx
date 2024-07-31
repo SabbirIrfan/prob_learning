@@ -2,8 +2,28 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import KeriNav from "./component/Navbar";
+import { ThemeProvider } from "@/app/(nextPractice)/component/theme-provider";
+
 
 const inter = Inter({ subsets: ["latin"] });
+
+// type Theme = {
+//   colors:{
+//     primary: string;
+//     secondary: string;
+//   }
+// }
+
+// const defaultTheme: Theme = {
+//   colors: {
+//     primary: "blue",
+//     secondary: "red",
+//   }
+
+// }
+
+// const ThemeContext = createContext<Theme>(defaultTheme);
+
 
 export const metadata: Metadata = {
   title: {
@@ -22,10 +42,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      {/* <ThemeContext.Provider value={defaultTheme}> */}
+      <ThemeProvider>
       <body className={inter.className}>
+
         <KeriNav />
         {children}
         </body>
+        
+        {/* </ThemeContext.Provider> */}
+        </ThemeProvider>
     </html>
   );
 }
