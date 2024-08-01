@@ -1,7 +1,7 @@
 "use client";
 
 import { useTheme } from "../component/theme-provider";
-
+import { clientSideFunction } from "../component/client-utils";
 // import ServerUtilFunction from "../utils/server-utils";
 
 export default function ClientRoutePage() {
@@ -12,10 +12,10 @@ export default function ClientRoutePage() {
         dots:true,
         
     }
-
+    const result = clientSideFunction();
   return (
     <>
-      <div style={{color: theme.colors.secondary}}>Client Routes</div>
+      <div style={{color: theme.colors.secondary}}>Client Routes {result}</div>
       {/* <p>{result}</p> */}
     </>
   );

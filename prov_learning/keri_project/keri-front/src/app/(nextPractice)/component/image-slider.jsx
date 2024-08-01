@@ -12,16 +12,16 @@ export default function ImageSlider() {
     <div className="image-slider-container">
       <Slider {...settings}>
         <div>
-          <img src="http://picsum.photos/400/200" />
+          <img src="http://picsum.photos/id/1/400/200" />
         </div>
         <div>
-          <img src="http://picsum.photos/400/200" />
+          <img src="http://picsum.photos/id/2/400/200" />
         </div>
         <div>
-          <img src="http://picsum.photos/400/200" />
+          <img src="http://picsum.photos/id/3/400/200" />
         </div>
         <div>
-          <img src="http://picsum.photos/400/200" />
+          <img src="http://picsum.photos/id/4/400/200" />
         </div>
       </Slider>
     </div>
