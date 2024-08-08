@@ -1,10 +1,10 @@
 import React from 'react'
 
-export const page = () => {
+export const PrivatPage = () => {
   return (
-    <div>page</div>
+    <div>Its a private folder</div>
   )
   
 }
 
-export default page;
+export default PrivatPage;
